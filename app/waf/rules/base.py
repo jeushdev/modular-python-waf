@@ -1,3 +1,4 @@
+from app.waf.models.request_context import RequestContext
 from abc import ABC, abstractmethod
 
 class BaseRule(ABC):
