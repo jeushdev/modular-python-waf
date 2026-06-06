@@ -1,6 +1,6 @@
 from app.waf.rules.base import BaseRule
 from app.waf.models.request_context import RequestContext
-from abc import ABC, abstractmethod
+from app.waf.exceptions import MaliciousRequestException
 import re
 
 class SQLInjectionRule(BaseRule):
@@ -11,5 +11,9 @@ class SQLInjectionRule(BaseRule):
         sqli_pattern = r"('|\b)(or|and)\b\s+\d+=\d+|'|--|\bunion\b|\bselect\b"
         for value in context.inputs.values():
             if re.search(sqli_pattern, value, re.IGNORECASE):
-                return True
+                raise MaliciousRequestException(
+                    rulename=self.name,
+                    severity=self.severity,
+                    payload=value
+                )
         return False

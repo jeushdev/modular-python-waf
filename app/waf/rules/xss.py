@@ -1,5 +1,6 @@
 from app.waf.rules.base import BaseRule
 from app.waf.models.request_context import RequestContext
+from app.waf.exceptions import MaliciousRequestException
 import re
 
 class XSSRule(BaseRule):
@@ -10,5 +11,9 @@ class XSSRule(BaseRule):
         xss_pattern = r"<script.*?>|<\/script>|javascript:|onerror=|onload=|html|<body>|<iframe|alert\(|confirm\(|prompt\("
         for value in context.inputs.values():
             if re.search(xss_pattern, value, re.IGNORECASE):
-                return True
+                raise MaliciousRequestException(
+                    rulename=self.name,
+                    severity=self.severity,
+                    payload=value
+                )
         return False
