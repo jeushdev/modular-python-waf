@@ -1,5 +1,5 @@
 class MaliciousRequestException(Exception):
-    def __init__(self, rulename, severity, payload):
+    def __init__(self, rulename: str, severity: str, payload: str):
         super().__init__(f"WAF Blocked a {severity} threat triggered by {rulename}") 
         self._rulename = rulename
         self._severity = severity
