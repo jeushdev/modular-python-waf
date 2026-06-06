@@ -1,0 +1,13 @@
+
+# Ignore an entire folder (always end with a slash)
+node_modules/
+dist/
+.venv/
+__pycache__/
+
+# Ignore all files ending with a specific extension (using a wildcard)
+*.log
+*.tmp
+*.pyc
+
+
