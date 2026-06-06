@@ -9,7 +9,7 @@ def home():
 
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
-    return "<h3>Success: Request passed through the firewall cleanly!</h3>"
+    return "<h3>Success: Request passed through the firewall cleanly!</h3>", 200
 
 if __name__ == '__main__':
     app.run(debug=True)
