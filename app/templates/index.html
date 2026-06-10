@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ironclad WAF - Simulation Playground</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 40px; }
+        .container { max-width: 800px; margin: 0 auto; text-align: center; }
+        h1 { color: #f8fafc; font-size: 32px; margin-bottom: 10px; }
+        p.subtitle { color: #94a3b8; font-size: 16px; margin-bottom: 40px; }
+        .card { background-color: #1e293b; border-radius: 8px; padding: 30px; margin-bottom: 25px; border: 1px solid #334155; text-align: left; }
+        .card h2 { margin-top: 0; color: #f8fafc; font-size: 20px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        .btn { display: inline-block; padding: 12px 24px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 14px; cursor: pointer; transition: background 0.2s; margin-right: 10px; margin-bottom: 10px; }
+        .btn-safe { background-color: #10b981; color: #fff; }
+        .btn-safe:hover { background-color: #059669; }
+        .btn-attack { background-color: #ef4444; color: #fff; }
+        .btn-attack:hover { background-color: #dc2626; }
+        .btn-dashboard { background-color: #3b82f6; color: #fff; display: block; text-align: center; margin: 40px auto 0 auto; max-width: 300px; font-size: 16px; }
+        .btn-dashboard:hover { background-color: #2563eb; }
+        code { font-family: 'Courier New', Courier, monospace; background-color: #0f172a; padding: 3px 6px; border-radius: 4px; color: #38bdf8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ Ironclad WAF Engine</h1>
+        <p class="subtitle">Adversarial Threat Simulation & Cyberattack Playground Sandbox</p>
+        
+        <div class="card">
+            <h2>Scenario A: Normal User Verification</h2>
+            <p>Simulate a standard, well-behaved web client passing standard inputs. The WAF normalization filter should pass this through cleanly without triggering any exceptions.</p>
+            <a href="/submit?username=goodcitizen" target="_blank" class="btn btn-safe">Launch Clean Request</a>
+        </div>
+
+        <div class="card">
+            <h2>Scenario B: SQL Injection (SQLi) Exploit Attempt</h2>
+            <p>Simulate a malicious threat vector trying to force an authentication bypass using a classic <code>' OR 1=1 --</code> payload condition array inside the query string parameters.</p>
+            <a href="/submit?username=admin%27%20OR%201%3D1%20--" target="_blank" class="btn btn-attack">Launch SQLi Attack</a>
+        </div>
+
+        <div class="card">
+            <h2>Scenario C: Cross-Site Scripting (XSS) Injection Probing</h2>
+            <p>Simulate an attacker trying to execute a persistent data cross-site attack script by injecting a nested <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> asset block.</p>
+            <a href="/submit?username=%3Cscript%3Ealert(%27hacked%27)%3C/script%3E" target="_blank" class="btn btn-attack">Launch XSS Attack</a>
+        </div>
+
+        <a href="/admin/dashboard" class="btn btn-dashboard">🛡️ Open SOC Admin Dashboard</a>
+    </div>
+</body>
+</html>
