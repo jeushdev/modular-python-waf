@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ironclad WAF - SOC Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 40px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #f8fafc; border-bottom: 2px solid #334155; padding-bottom: 15px; margin-bottom: 30px; }
+        .metric-card { background-color: #1e293b; padding: 25px; border-radius: 8px; border-left: 5px solid #ef4444; margin-bottom: 30px; display: inline-block; min-width: 250px; }
+        .metric-card h3 { margin: 0; color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .metric-card p { margin: 10px 0 0 0; font-size: 36px; font-weight: bold; color: #f87171; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: #1e293b; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 15px; text-align: left; }
+        th { background-color: #334155; color: #f8fafc; font-weight: 600; text-transform: uppercase; font-size: 13px; }
+        tr { border-bottom: 1px solid #334155; }
+        tr:last-child { border-bottom: none; }
+        tr:hover { background-color: #1e293b7a; }
+        .severity-badge { background-color: #7f1d1d; color: #fca5a5; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .payload-code { font-family: 'Courier New', Courier, monospace; background-color: #0f172a; padding: 6px 10px; border-radius: 4px; color: #38bdf8; word-break: break-all; }
+        .empty-state { text-align: center; color: #64748b; padding: 5px 0; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ Ironclad Security Operations Center (SOC)</h1>
+        
+        <div class="metric-card">
+            <h3>Total Intrusion Threats Blocked</h3>
+            <p>{{ total_attacks }}</p>
+        </div>
+
+        <h2>Live Real-Time Security Incident Stream</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Timestamp</th>
+                    <th style="width: 20%;">Security Sub-Engine</th>
+                    <th style="width: 10%;">Severity</th>
+                    <th style="width: 15%;">Target Path</th>
+                    <th style="width: 40%;">Offending Attacker Payload</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.timestamp }}</td>
+                    <td style="font-weight: 600; color: #cbd5e1;">{{ log.rulename }}</td>
+                    <td><span class="severity-badge">{{ log.severity }}</span></td>
+                    <td style="color: #94a3b8;">{{ log.path }}</td>
+                    <td><div class="payload-code">{{ log.payload }}</div></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="empty-state">No malicious security vectors intercepted yet. Perimeter status green.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
