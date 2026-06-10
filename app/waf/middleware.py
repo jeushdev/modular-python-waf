@@ -2,6 +2,7 @@ from app.waf.models.request_context import RequestContext
 from app.waf.engine import WAFEngine
 from flask import Flask, request, abort
 from app.waf.exceptions import MaliciousRequestException
+from app.waf.telemetry import telemetry_warehouse
 
 app = Flask(__name__)
 
@@ -21,5 +22,13 @@ class WAFMiddleware:
             print(f"-> SEVERITY:     {e.severity}")
             print(f"-> OFFENDING RAW PAYLOAD: {e.payload}")
             print(f"-> TARGET ENDPOINT:       {request.path}\n")
+
+            telemetry_warehouse.record_attack(
+                rulename=e.rulename,
+                severity=e.severity,
+                payload=e.payload,
+                path=request.path
+            )
+
             abort(403)
             
